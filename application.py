@@ -14,6 +14,7 @@ def get_indicator_slice(indicator):
     return slice
 
 
+#Loading initial data
 st.title("Global Health")
 with st.spinner(text="Loading data..."):
     df = load_data()
@@ -27,35 +28,60 @@ with st.spinner(text="Loading data..."):
     df = pd.melt(df,id_vars=["Country Name",'Indicator Name'])
     df.rename(columns = {"variable":'Year'},inplace=True)
 
-st.dataframe(df.head(100))
+st.dataframe(df.head(1000))
 
 st.header("Thinking of using the example in class where the research used a slider to show the plot points move like Hans Rosling and gapminder")
 
 #Define multi select to get indicators people can use
 potentials = df["Indicator Name"].unique()
-selection = st.multiselect("Select indicator(s)",options = potentials)
+selection = st.multiselect("Select indicator(s)",default=potentials[0],options = potentials)
 
-#slice data based on indicators chosen
-data = get_indicator_slice(selection)
-# data = data.head(1500)
-data = data.dropna()
-st.write(data)
-
-# select_year = alt.selection_single(
-#     name='select', fields=['year'], init={'year': 1955},
-#     bind=alt.binding_range(min=1960, max=2020, step=1)
-# )
+#If selection is made. Only input to prevent errors
+if selection:
+    #slice data based on indicators chosen
+    data = get_indicator_slice(selection)
+    data = data.dropna()
 
 
-pop = alt.Chart(data).mark_point(filled=True).encode(
-    alt.X("Year", scale=alt.Scale(zero=False)),
-    alt.Y("value:Q",scale=alt.Scale(zero=False)),
-    # alt.Size('value:Q', scale=alt.Scale(domain=[0, 1200000000], range=[0,1000])),
-    # alt.Color('Country Name:N', legend=None),
-    alt.OpacityValue(0.5),
-    alt.Tooltip('Country Name:N')
-    # alt.Order('pop:Q', sort='descending')
+    #Get unique countries
+    unique_countries = data["Country Name"].unique()
+    countries = st.multiselect("Select Countries",default=unique_countries[0],options = unique_countries)
+    
+    #If countries selected. Only input to prevent errors
+    if countries:
+        data =data[data["Country Name"].isin(countries)]
+
+        #Pivot data and clean it up
+        data = data.pivot_table(index=['Country Name',"Year"],columns="Indicator Name",values=['value'])
+        data.columns = data.columns.get_level_values(1)
+        data.reset_index(inplace=True)
+        # data = data.dropna()
+
+        #Write data to application
+        st.write(data)
+    else:
+        st.write(data.head(50))
+else:
+    st.write(df.head(50))
+
+
+
+
+select_year = alt.selection_single(
+    name='select', fields=['year'], init={'year': 1955},
+    bind=alt.binding_range(min=1960, max=2020, step=1)
 )
+
+
+# pop = alt.Chart(data).mark_point(filled=True).encode(
+#     alt.X("Year", scale=alt.Scale(zero=False)),
+#     alt.Y("",scale=alt.Scale(zero=False)),
+#     # alt.Size('value:Q', scale=alt.Scale(domain=[0, 1200000000], range=[0,1000])),
+#     alt.Color('Country Name:N', legend=None),
+#     alt.OpacityValue(0.5),
+#     alt.Tooltip('value:Q')
+#     # alt.Order('pop:Q', sort='descending')
+# )
 # .add_selection(select_year).transform_filter(select_year)
 
-st.altair_chart(pop)
+# st.altair_chart(pop)
