@@ -1,12 +1,46 @@
 from re import U
+from typing import Sized
+from matplotlib.pyplot import title
 import streamlit as st
 import pandas as pd
 import altair as alt
+import numpy as np
+
+# import altair as alt
+# from vega_datasets import data
+
+# source = data.population.url
+
+# pink_blue = alt.Scale(domain=('Male', 'Female'),
+#                       range=["steelblue", "salmon"])
+
+# slider = alt.binding_range(min=1900, max=2000, step=10)
+# # select_year = alt.selection_single(name="year", fields=['year'],
+# #                                    bind=slider, init={'year': 2000})
+
+# input = alt.binding_select(options=[2004,2005,2006,2007], name='Year')
+# select_year = alt.selection_single(fields=['Year'], bind=input)
+
+
+# pop = alt.Chart(source).mark_bar().encode(
+#     x=alt.X('sex:N', title=None),
+#     y=alt.Y('people:Q', scale=alt.Scale(domain=(0, 12000000))),
+#     color=alt.Color('sex:N', scale=pink_blue),
+#     column='age:O'
+# ).properties(
+#     width=20
+# ).add_selection(
+#     select_year
+# ).transform_filter(select_year)
+
+
+# st.altair_chart(pop)
+
 
 #Define functions to load data
-@st.cache
+@st.cache(allow_output_mutation=True)
 def load_data():
-    df = pd.read_csv("health-raw-2021.csv",skiprows=3)
+    df = pd.read_csv("health-HIV-expenditure.csv")
     return df.sort_index()
 
 def get_indicator_slice(indicator):
@@ -18,15 +52,10 @@ def get_indicator_slice(indicator):
 st.title("Global Health")
 with st.spinner(text="Loading data..."):
     df = load_data()
-    df = df.loc[:,["Country Name",'Indicator Name','1960', '1961', '1962', '1963', '1964', '1965', '1966', '1967', '1968',
-'1969', '1970', '1971', '1972', '1973', '1974', '1975', '1976', '1977',
-'1978', '1979', '1980', '1981', '1982', '1983', '1984', '1985', '1986',
-'1987', '1988', '1989', '1990', '1991', '1992', '1993', '1994', '1995',
-'1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004',
-'2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013',
-'2014', '2015', '2016', '2017', '2018', '2019', '2020']]
     df = pd.melt(df,id_vars=["Country Name",'Indicator Name'])
     df.rename(columns = {"variable":'Year'},inplace=True)
+    # df = df.astype({'Year':'int64'})
+
 
 st.dataframe(df.head(1000))
 
@@ -34,14 +63,25 @@ st.header("Thinking of using the example in class where the research used a slid
 
 #Define multi select to get indicators people can use
 potentials = df["Indicator Name"].unique()
-selection = st.multiselect("Select indicator(s)",default=potentials[0],options = potentials)
+potentials = potentials.tolist()
+
+#Remove Y variables
+potentials.remove("Antiretroviral therapy coverage for PMTCT (% of pregnant women living with HIV)")
+potentials.remove("Antiretroviral therapy coverage (% of people living with HIV)")
+
+selection = st.selectbox("Select indicator(s)",options = potentials)
 
 #If selection is made. Only input to prevent errors
 if selection:
     #slice data based on indicators chosen
+
+    #Convert string to list 
+    selection = [selection]
+    selection.extend(['Antiretroviral therapy coverage (% of people living with HIV)',"Antiretroviral therapy coverage for PMTCT (% of pregnant women living with HIV)"])
+    # st.write(selection)
     data = get_indicator_slice(selection)
     data = data.dropna()
-
+    # st.write(potentials)
 
     #Get unique countries
     unique_countries = data["Country Name"].unique()
@@ -56,9 +96,32 @@ if selection:
         data.columns = data.columns.get_level_values(1)
         data.reset_index(inplace=True)
         # data = data.dropna()
+        data = data.astype({'Year':'int32'})
 
-        #Write data to application
         st.write(data)
+        select_year = alt.selection_single(name='select', fields=['Year'], 
+        init={'Year': 2000},bind=alt.binding_range(min=2000, max=2020, step=1.0))
+
+
+        left = alt.Chart(data,title="% of people living with HIV recieving antiretroviral therapy").mark_circle().encode(
+            alt.X(selection[0],type='quantitative'),
+            alt.Y(selection[1],title='Antiretroviral therapy coverage', type = "quantitative"),
+            alt.Size(selection[1])
+            ,alt.Color('Country Name'),
+            alt.Tooltip(selection[1],type="quantitative"),
+        ).add_selection(select_year).transform_filter(select_year)
+
+
+        right = alt.Chart(data,title='% of pregnant women living with HIV recieving antiretroviral therapy').mark_circle().encode(
+            alt.X(selection[0],type='quantitative'),
+            alt.Y(selection[2],title='Antiretroviral therapy coverage', type = "quantitative"),
+            alt.Size(selection[1])
+            ,alt.Color('Country Name'),
+            alt.Tooltip(selection[1],type="quantitative")
+        ).add_selection(select_year).transform_filter(select_year)
+           
+
+        st.altair_chart(left|right)
     else:
         st.write(data.head(50))
 else:
@@ -67,21 +130,4 @@ else:
 
 
 
-select_year = alt.selection_single(
-    name='select', fields=['year'], init={'year': 1955},
-    bind=alt.binding_range(min=1960, max=2020, step=1)
-)
 
-
-# pop = alt.Chart(data).mark_point(filled=True).encode(
-#     alt.X("Year", scale=alt.Scale(zero=False)),
-#     alt.Y("",scale=alt.Scale(zero=False)),
-#     # alt.Size('value:Q', scale=alt.Scale(domain=[0, 1200000000], range=[0,1000])),
-#     alt.Color('Country Name:N', legend=None),
-#     alt.OpacityValue(0.5),
-#     alt.Tooltip('value:Q')
-#     # alt.Order('pop:Q', sort='descending')
-# )
-# .add_selection(select_year).transform_filter(select_year)
-
-# st.altair_chart(pop)
