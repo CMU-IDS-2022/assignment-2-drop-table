@@ -70,7 +70,7 @@ if selection:
     #If countries selected. Only input to prevent errors
     if countries:
         data =data[data["Country Name"].isin(countries)]
-        st.write(data)
+        # st.write(data)
 
         # #Pivot data and clean it up
         data["value"] = data["value"].fillna(0)
@@ -81,7 +81,7 @@ if selection:
         # data = data.dropna()
         data = data.astype({'Year':'int32'})
 
-        # st.write(data)
+        st.write(data)
         select_year = alt.selection_single(name='select', fields=['Year'], 
         init={'Year': min(data["Year"])},bind=alt.binding_range(min=min(data["Year"]), max=max(data["Year"]), step=1.0))
 
@@ -89,27 +89,8 @@ if selection:
         single_country = alt.selection_single(name="select_country", fields=["Country Name"])
         single_year = alt.selection_single(name="select_year",fields=["Year"])
         
-        
-        #Left chart
-        left = alt.Chart(data,title="% of people living with HIV recieving antiretroviral therapy").mark_circle().encode(
-            alt.X(selection[0],type='quantitative'),
-            alt.Y(selection[1],title='Antiretroviral therapy coverage', type = "quantitative"),
-            alt.Size(selection[1]),
-            color=alt.condition(single_country,'Country Name' ,alt.value('lightgray'))
-        ).add_selection(select_year,single_country,single_year).transform_filter(select_year)
 
-        #Right Chart
-        right = alt.Chart(data,title='% of pregnant women living with HIV recieving antiretroviral therapy').mark_circle().encode(
-            alt.X(selection[0],type='quantitative'),
-            alt.Y(selection[2],title='Antiretroviral therapy coverage', type = "quantitative"),
-            alt.Size(selection[1]),
-            color=alt.condition(single_country,'Country Name' ,alt.value('lightgray')),
-        ).add_selection(select_year,single_country,single_year).transform_filter(select_year)
-        
-
-        st.altair_chart(left|right)
-
-        # st.write(single_year)
+         # st.write(single_year)
         #Visual to display when clicked
         #Repeating graphs to show related metrics to the indicator chosen
         columns = ["Unmet need for contraception (% of married women ages 15-49)","Contraceptive prevalence, modern methods (% of women ages 15-49)","Current health expenditure (% of GDP)","Condom use, population ages 15-24, male (% of males ages 15-24)","Condom use, population ages 15-24, female (% of females ages 15-24)"] 
@@ -120,10 +101,53 @@ if selection:
                 alt.Y(alt.repeat("column"),type='quantitative'),
                alt.Color('Country Name'),
                alt.Tooltip("Year")
-            ).repeat(
+             ).repeat(
                 column=columns,
                 row=[selection[0]]
-            ).add_selection(single_country,single_year).transform_filter(single_country).transform_filter(single_year)
+            ).add_selection(single_country).transform_filter(single_country)
+        # text = related.mark_text(
+        #     #  align='left',
+        #     # baseline='middle',
+        #     # dx=3  # Nudges text to right so it doesn't appear on top of the bar
+        # ).encode(
+        #     text='Year:O'
+        # )
+# add_selection(single_country,single_year).
+        
+        #Left chart
+        left = alt.Chart(data,title="% of people living with HIV recieving antiretroviral therapy").mark_circle().encode(
+            alt.X(selection[0],type='quantitative'),
+            alt.Y(selection[1],title='Antiretroviral therapy coverage', type = "quantitative"),
+            alt.Size(selection[1]),
+            color=alt.condition(single_country,'Country Name' ,alt.value('lightgray'))
+        ).add_selection(select_year,single_country).transform_filter(select_year)
+
+        #Right Chart
+        right = alt.Chart(data,title='% of pregnant women living with HIV recieving antiretroviral therapy').mark_circle().encode(
+            alt.X(selection[0],type='quantitative'),
+            alt.Y(selection[2],title='Antiretroviral therapy coverage', type = "quantitative"),
+            alt.Size(selection[1]),
+            color=alt.condition(single_country,'Country Name' ,alt.value('lightgray')),
+        ).add_selection(select_year,single_country).transform_filter(select_year)
+        
+
+        st.altair_chart(left|right)
+
+        # st.write(single_year)
+        #Visual to display when clicked
+        #Repeating graphs to show related metrics to the indicator chosen
+        # columns = ["Unmet need for contraception (% of married women ages 15-49)","Contraceptive prevalence, modern methods (% of women ages 15-49)","Current health expenditure (% of GDP)","Condom use, population ages 15-24, male (% of males ages 15-24)","Condom use, population ages 15-24, female (% of females ages 15-24)"] 
+        # # rows = ["Country Name"]
+        # #Add related repeating charts
+        # related = alt.Chart(data).mark_bar().encode(
+        #         alt.X(alt.repeat("row"),type='quantitative'),
+        #         alt.Y(alt.repeat("column"),type='quantitative'),
+        #        alt.Color('Country Name'),
+        #        alt.Tooltip("Year")
+        #     ).repeat(
+        #         column=columns,
+        #         row=[selection[0]]
+        #     ).add_selection(single_country,single_year).transform_filter(single_country).transform_filter(single_year)
 
 
 # .transform_filter(single_country).transform_filter(single_year)
