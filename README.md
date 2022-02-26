@@ -1,7 +1,7 @@
 # CMU Interactive Data Science Assigment 2
 
 * **Team members**: aaronho@andrew.cmu.edu and anami@andrew.cmu.edu (Update XXXX with your team's emails)
-* **Online URL**: https://share.streamlit.io/cmu-ids-2022/assignment-2-drop-table/RegressionAnalysis.py (Update YYYY with your repo name)
+* **Online URL**: https://share.streamlit.io/cmu-ids-2022/assignment-2-drop-table/HIV-health-trends.py (Update YYYY with your repo name)
 
 ## Instructions
 
