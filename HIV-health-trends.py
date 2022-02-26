@@ -96,28 +96,28 @@ if selection:
         contraception = alt.Chart(related_data,title="% of married women with unmet need for contraception").mark_line().encode(
             alt.X("Year",type='temporal', scale=alt.Scale(zero=False)),
             alt.Y("Unmet need for contraception (% of married women ages 15-49)",type='quantitative',scale=alt.Scale(zero=False)),
-            alt.Color('Country Name'),
-             )
+            color=alt.condition(single_country,'Country Name' ,alt.value('lightgray')),
+             ).add_selection(single_country).transform_filter(single_country)
         contraceptive_prev_modern = alt.Chart(related_data,title="% of women using modern contraceptive methods").mark_line().encode(
             alt.X("Year",type='temporal', scale=alt.Scale(zero=False)),
             alt.Y("Contraceptive prevalence, modern methods (% of women ages 15-49)",type='quantitative',scale=alt.Scale(zero=False)),
-            alt.Color('Country Name'),
-             )
+            color=alt.condition(single_country,'Country Name' ,alt.value('lightgray')),
+             ).add_selection(single_country).transform_filter(single_country)
         health_expen = alt.Chart(related_data,title="Current health expenditure (% of GDP)").mark_line().encode(
             alt.X("Year",type='temporal', scale=alt.Scale(zero=False)),
             alt.Y("Current health expenditure (% of GDP)",type='quantitative',scale=alt.Scale(zero=False)),
-            alt.Color('Country Name'),
-             )
+            color=alt.condition(single_country,'Country Name' ,alt.value('lightgray')),
+             ).add_selection(single_country).transform_filter(single_country)
         condom_use_male = alt.Chart(related_data,title="Current health expenditure (% of GDP)").mark_line().encode(
             alt.X("Year",type='temporal', scale=alt.Scale(zero=False)),
             alt.Y("Condom use, population ages 15-24, male (% of males ages 15-24)",type='quantitative',scale=alt.Scale(zero=False)),
-            alt.Color('Country Name'),
-             )
+            color=alt.condition(single_country,'Country Name' ,alt.value('lightgray')),
+             ).add_selection(single_country).transform_filter(single_country)
         condom_use_female = alt.Chart(related_data,title="Current health expenditure (% of GDP)").mark_line().encode(
             alt.X("Year",type='temporal', scale=alt.Scale(zero=False)),
             alt.Y("Condom use, population ages 15-24, female (% of females ages 15-24)",type='quantitative',scale=alt.Scale(zero=False)),
-            alt.Color('Country Name'),
-             )
+            color=alt.condition(single_country,'Country Name' ,alt.value('lightgray')),
+             ).add_selection(single_country).transform_filter(single_country)
         
            
 
