@@ -89,10 +89,12 @@ if selection:
 
         #Store data into another dataframe to show related data 
         related_data = data.dropna()
-        related_data = related_data.pivot_table(index=['Country Name',"Year"],columns="Indicator Name",values=['value'])
-        related_data.columns = related_data.columns.get_level_values(1)
-        related_data.reset_index(inplace=True)
-        related_data = related_data.astype({'Year':'int64'})
+        if not related_data.empty:
+            related_data = related_data.pivot_table(index=['Country Name',"Year"],columns="Indicator Name",values=['value'])
+            related_data.columns = related_data.columns.get_level_values(1)
+            related_data.reset_index(inplace=True)
+            related_data = related_data.astype({'Year':'int64'})
+            
 
         # #Pivot data and clean it up
         data["value"] = data["value"].fillna(0)
