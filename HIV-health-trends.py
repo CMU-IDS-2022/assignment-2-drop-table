@@ -24,7 +24,8 @@ image = Image.open('HIV.jpg')
 
 #Loading initial data
 st.image(image)
-st.title("HIV Indicators - Exploratory and Machine Learning Analysis")
+st.title("HIV - Exploratory and Machine Learning Analysis")
+st.write("This application enables users to understand present trends and plan for the future by evaluating strategies to mitigate HIV prevalance."
 
 #Define functions to load data
 # @st.cache(allow_output_mutation=True)
@@ -39,7 +40,7 @@ def get_indicator_slice(indicator):
 
 #Loading initial data
 #st.title("Global Health")
-st.title("Exploratory Data Analysis - Visualizing HIV")
+st.title("Exploratory Data Analysis")
 with st.spinner(text="Loading data..."):
     df = load_data()
     df.drop(columns=['Country Code','Indicator Code'],inplace=True)
@@ -51,7 +52,14 @@ with st.spinner(text="Loading data..."):
 st.dataframe(df.head(1000))
 
 
-st.write("The purpose of these charts is to show how prepared a country/region has been to HIV. The checkbox will show changes in related indicators over the years for the selected countries/regions/. Please select an indicator and the countries/regions you would like to explore")
+st.write(
+    """
+         The purpose of these charts is to show how prepared a country/region has been to HIV. 
+         The checkbox will show changes in related indicators over the years for the selected countries/regions. 
+         Please select an indicator and the countries/regions you would like to explore:
+         
+    """
+)
 #Define select to get indicators people can use
 potentials = [
 "Incidence of HIV, ages 15-49 (per 1,000 uninfected population ages 15-49)",
@@ -173,13 +181,12 @@ else:
     st.write(df.head(50))
     
     
-st.title("Machine Learning - Regression Analysis on HIV")
+st.title("Machine Learning Analysis")
 st.write(
     """
     
-    We will be examining how certain indicators predict HIV by using a data set from 1990 to 2020.
-    We will be using linear regression and ridge regression to see the HIV indicators and how strongly they predict HIV.
-   .This is important as it helps us plan for future and evaluate the current strategies to mitigate HIV prevalnce.
+    To further our analysis, we will be examining how certain indicators predict HIV by using linear regression and ridge regression.
+    
     """)
     
 with st.spinner(text="Loading data..."):
@@ -191,7 +198,7 @@ with st.spinner(text="Loading data..."):
 '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013',
 '2014', '2015', '2016', '2017', '2018', '2019', '2020'])]
 
-st.write("**The original dataframe grouped by Indicators for all countries from 1990 - 2020**")
+st.write("**Dataframe grouped by indicators for all countries from 1990 - 2020:**")
 
 st.dataframe(final_df.head(10))
 
@@ -293,10 +300,10 @@ if option=='Linear Regression':
     lin_rmse =round(lin_rmse, 3)
     
     
-    st.write("**Mean Squared Error**")
+    st.write("**Mean Squared Error:**")
     st.markdown('<p class="big-font">' + str(lin_rmse)+'</p>', unsafe_allow_html=True)
     
-    st.write("**Feature Importance**")
+    st.write("**Feature Importance:**")
     new_data = final_features_scaled_df.iloc[:, :-1]
     
     #for linear regression chart
@@ -316,7 +323,7 @@ if option=='Linear Regression':
     
 elif option=='Ridge Regression':
     st.header("Ridge Regression:")
-    st.write("This is a regularization technique. It is most suitable when a data set contains a higher number of predictor variables than the number of observations")
+    st.write("This is a regularization technique. It is most suitable when a data set contains a higher number of predictor variables than the number of observations.")
     
     print(final_features_scaled_df)
     left_column, right_column = st.columns(2)
@@ -324,7 +331,7 @@ elif option=='Ridge Regression':
     # test size
     test_size = left_column.number_input(
     				'Please choose your train-test split ratio: (range: 0.2-0.4):'
-                    'α (alpha) is the parameter which balances the amount of emphasis given to minimizing RSS vs minimizing sum of square of coefficients. α can take various values: α = 0: The objective becomes same as simple linear regression',
+                    ,
     				min_value=0.2,
     				max_value=0.4,
     				value=0.4,
@@ -338,7 +345,8 @@ elif option=='Ridge Regression':
     
     # test size
     alpha = left_column.number_input(
-    				'Please choose Alpha for Ridge Regression (range: 0.0-1.0):',
+    				'Please choose Alpha for Ridge Regression (range: 0.0-1.0):'
+        'α (alpha) is the parameter which balances the amount of emphasis given to minimizing RSS vs minimizing sum of square of coefficients. α can take various values: α = 0: The objective becomes same as simple linear regression.',
     				min_value=0.0,
     				max_value=1.0,
     				value=0.2,
