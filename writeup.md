@@ -1,8 +1,6 @@
-# Project name
+# HIV Health Trends Analysis
 
 ![A screenshot of your application. Could be a GIF.](HIVHealthTrends_Screenshot1.png)
-
-TODO: Update screenshot
 
 TODO: Short abstract describing the main goals and how you achieved them.
 
