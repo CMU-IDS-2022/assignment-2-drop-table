@@ -52,14 +52,14 @@ with st.spinner(text="Loading data..."):
 st.dataframe(df.head(1000))
 
 
-st.write(
-    """
-         The purpose of these charts is to show how prepared a country/region has been to HIV. 
-         The checkbox will show changes in related indicators over the years for the selected countries/regions. 
-         Please select an indicator and the countries/regions you would like to explore:
+# st.write(
+#     """
+#          The purpose of these charts is to show how prepared a country/region has been to HIV. 
+#          The checkbox will show changes in related indicators over the years for the selected countries/regions. 
+#          Please select an indicator and the countries/regions you would like to explore:
          
-    """
-)
+#     """
+# )
 #Define select to get indicators people can use
 potentials = [
 "Incidence of HIV, ages 15-49 (per 1,000 uninfected population ages 15-49)",
