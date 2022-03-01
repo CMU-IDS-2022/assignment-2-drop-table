@@ -2,19 +2,13 @@
 
 ![A screenshot of your application. Could be a GIF.](HIVHealthTrends_Screenshot1.png)
 
-TODO: Short abstract describing the main goals and how you achieved them.
-
 ## Project Goals
-
-TODO: **A clear description of the goals of your project.** Describe the question that you are enabling a user to answer. The question should be compelling and the solution should be focused on helping users achieve their goals. 
 
 Through our application, we wanted to enable users to answer the question of how well certain countries are doing in their HIV response and preparedness. We wanted users to explore how well their own country or other countries and regions are doing in providing therapy coverage for HIV in response to growing HIV prevalence in the population or certain demographics in the population. For example, a user from Colombia could select the desired indiciator that they wish to explore and see its desired relationship with antiretroviral therapy coverage. From analyzing this relationship, the hope is to see that even though as incidences of HIV rises, the percentage of people living with HIV who are recieving HIV therapy treatments also rises. Additionally, to further exploration, we wanted to help users to explore growth and other changes in other related indicators such as current health expidenture and contraceptive use. From the interaction with our charts and utilizing the different indicators, we hope that users will be able to gauge how well their country and other countries are doing in response to HIV and be able to target areas for improvement.
 
 To further the exploration process for our chosen subset of the data i.e. HIV indicators, we also performed an in depth machine learning exercise. We basically wanted the user to further understand how strongly certain variables correlated with HIV in order to increase awareness and provide a starting point on suggesting possible solutions to HIV prevalance. For this purpose, we took up supervised machine learning as we had data on our outcome variable i.e. people infected with HIV and we wanted to train our data to predict people infected with HIV. Specifically, we used multiple linear regression and ridge regression to predict our outcome variable and provided our user with the option to choose between either and see its outcomes on our chosen data set. 
 
 ## Design
-
-TODO: **A rationale for your design decisions.** How did you choose your particular visual encodings and interaction techniques? What alternatives did you consider and how did you arrive at your ultimate choices?
 
 A crucial part of our design was to filter and reduce the amount of data and features that were in the dataset we were using. Many of the features that were in the dataset were irrelevant and not very crucial to building a performance metric of HIV preparendess in countries. This is why we opted to use a single select dropdown menu so that users can select the relevant features they wanted to see at a time. We felt that the effort to fit too many features in our charts would also translate as increased difficulty in the cognitive understanding of our charts. However, we still wanted users to compare performance across multiple countries and over multiple years which is why a multiselect was used for countries to select the desired countries to analyze as well as a slider bar to show changes over the years. The suggestion to use the slider was brought up by Venkat who brought up the chart created by Hans Rosling in the Gapminder demo. We felt that since we were also given "timed" data that changes depending on what you select, it would also be interesting to apply that same principle to our charts. We initially tried using a bar chart or line chart for this interaction,however we found that using a scatter plot was more intuitive and was a cleaner representation of the changes that we wanted to show.
 
@@ -26,15 +20,11 @@ These layers of interactivity in our exploration and machine learning models, al
 
 ## Development
 
-TODO: **An overview of your development process.** Describe how the work was split among the team members. Include a commentary on the development process, including answers to the following questions: Roughly how much time did you spend developing your application (in people-hours)? What aspects took the most time?
-
 We decided to split up the work into the main components that were studied in class so far. Aaron focused on the interactivity chart portion and utilizing that for exploratory data analysis. Anam focused on creating interactivity with the machine learning portion of the project. In each portion, it would allow us to explore interactivity within a specific context that we studied in class. We felt that it would enable us to fully engage with the data we were given and create a robust working application that would enable the user to determine how well their country or other countries are doing in response to HIV. Overall, it took about a total of 12 people-hours to complete this project. 
 
 The aspects that took the most amount of time were cleaining up the data so that it would be easier to use in visualization and determining which interactivity techniques were feasible and relevant to cognitive understanding of the data. In the machine learning model development, several ierations were run to come up with the final data set and features to be used for the model. For instance, we had to cater to NA values and do feature selection and correlation analysis to include only those features that were most relevant to our analysis. We also performed min max scaler and removed outliers from our data to come to the final data set to be used for our regression.
 
 ## Success Story
-
-TODO:  **A success story of your project.** Describe an insight or discovery you gain with your application that relates to the goals of your project.
 
 We were encouraged to see that even though some countries had a high HIV prevalence, their antiretroviral therapy coverage was still very high which told us that the resources in the country were sufficent to treat the majority of people living with HIV. By interacting with the slider and analyzing different countries, we were able to see that many countries that would normally be classified as third-world showed an inverse relationship with HIV prevalence and coverage over time. In coinciding with our goals, we saw that these countries became more prepared to treat HIV while also working to decrease the prevalence of HIV in the populations. 
 
