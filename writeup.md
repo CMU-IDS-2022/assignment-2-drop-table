@@ -1,7 +1,7 @@
 # HIV Health Trends Analysis
 
 ![A screenshot of your application. Could be a GIF.](HIVHealthTrends_Screenshot1.png)
-(HIVHealthTrends_Screenshot2.png)
+![A screenshot of your application. Could be a GIF.](HIVHealthTrends_Screenshot2.png)
 (HIVHealthTrends_Screenshot3.png)
 (HIVHealthTrends_Screenshot4.png)
 (HIVHealthTrends_Screenshot5.png)
