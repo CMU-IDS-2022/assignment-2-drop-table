@@ -41,7 +41,7 @@ def get_indicator_slice(indicator):
 #Loading initial data
 #st.title("Global Health")
 st.title("Exploratory Data Analysis")
-st.write("Note: this data reflects the metrics collected as of 2021 and may reflect missing data points from previous years.")
+st.write("*Note: this data reflects the metrics collected as of 2021 and may reflect missing data points from previous years.")
 with st.spinner(text="Loading data..."):
     df = load_data()
     df.drop(columns=['Country Code','Indicator Code'],inplace=True)
