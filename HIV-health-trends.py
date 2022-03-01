@@ -25,7 +25,7 @@ image = Image.open('HIV.jpg')
 #Loading initial data
 st.image(image)
 st.title("HIV Health Trends Analysis")
-st.write("This application enables users to understand present HIV health trends through 1) Exploratory Data Analysis and 2) Machine Learning Models and plan for the future by evaluating strategies to mitigate HIV prevalance.")
+st.write("This application enables users to understand present HIV health trends through 1) Exploratory Data Analysis and 2) Machine Learning Models and plan for the future by evaluating strategies to mitigate HIV prevalance. Created by Aaron Ho and Anam Iqbal.")
 
 #Define functions to load data
 # @st.cache(allow_output_mutation=True)
