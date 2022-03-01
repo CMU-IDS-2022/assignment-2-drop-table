@@ -1,7 +1,7 @@
 # CMU Interactive Data Science Assigment 2
 
-* **Team members**: aaronho@andrew.cmu.edu and anami@andrew.cmu.edu (Update XXXX with your team's emails)
-* **Online URL**: https://share.streamlit.io/cmu-ids-2022/assignment-2-drop-table/HIV-health-trends.py (Update YYYY with your repo name)
+* **Team members**: aaronho@andrew.cmu.edu and anami@andrew.cmu.edu 
+* **Online URL**: https://share.streamlit.io/cmu-ids-2022/assignment-2-drop-table/HIV-health-trends.py
 
 ## Instructions
 
@@ -22,6 +22,6 @@ Once the repo is set up, please update the URL as the top of this readme and add
 
 ### Deliverables
 
-- [ ] An interactive data science or machine learning application using Streamlit.
-- [ ] The URL at the top of this readme needs to point to your Streamlit application online. The application should also list the names of the team members. 
-- [ ] A write-up that describes the goals of your application, justifies design decisions, and gives an overview of your development process. Use the `writeup.md` file in this repository. You may add more sections to the document than the template has right now.
+- [X] An interactive data science or machine learning application using Streamlit.
+- [X] The URL at the top of this readme needs to point to your Streamlit application online. The application should also list the names of the team members. 
+- [X] A write-up that describes the goals of your application, justifies design decisions, and gives an overview of your development process. Use the `writeup.md` file in this repository. You may add more sections to the document than the template has right now.
