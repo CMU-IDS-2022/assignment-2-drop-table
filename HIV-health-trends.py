@@ -174,6 +174,7 @@ if selection:
 
         display_relate = st.checkbox('Display related indicators by year for countries/regions selected')
         if display_relate:
+                st.write("Click on a line to display for one particular country")
                 level1 = alt.hconcat(contraception, contraceptive_prev_modern)
                 level2 = alt.hconcat(health_expen,condom_use_male)
                 st.altair_chart(alt.vconcat(level1,level2,condom_use_female))
